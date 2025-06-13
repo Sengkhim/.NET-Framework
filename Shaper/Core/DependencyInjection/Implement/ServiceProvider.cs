@@ -9,7 +9,6 @@ using Service_IServiceProvider = Shaper.Core.DependencyInjection.Service.IServic
 
 namespace Shaper.Core.DependencyInjection.Implement;
 
-    // ServiceProvider Implementation
     /// <summary>
     /// The core DI container that resolves service instances.
     /// Handles Transient, Singleton, and provides IServiceScopeFactory for Scoped.
@@ -66,41 +65,44 @@ namespace Shaper.Core.DependencyInjection.Implement;
         /// </summary>
         internal void InitializeSingletons()
         {
-            foreach (var descriptor in _serviceDescriptors.Where(sd => sd.Lifetime == ServiceLifetime.Singleton && sd.ImplementationInstance != null))
-            {
+            var descriptors = _serviceDescriptors
+                .Where(sd => sd.Lifetime == ServiceLifetime.Singleton && sd.ImplementationInstance != null);
+            
+            foreach (var descriptor in descriptors)
                 _singletonInstances.TryAdd(descriptor.ServiceType, descriptor.ImplementationInstance);
-            }
         }
 
-        public TService GetService<TService>()
-        {
-            return (TService)GetService(typeof(TService));
-        }
+        public TService GetService<TService>() => (TService)GetService(typeof(TService));
+        
 
         public object GetService(Type serviceType)
         {
             if (!_descriptorMap.TryGetValue(serviceType, out var descriptor))
                 return CreateInstance(serviceType);
 
-            switch (descriptor.Lifetime)
+            return descriptor.Lifetime switch
             {
-                case ServiceLifetime.Transient:
-                    return CreateInstance(descriptor.ImplementationType);
-                case ServiceLifetime.Singleton:
-                    return _singletonInstances.GetOrAdd(descriptor.ServiceType, _ => CreateInstance(descriptor.ImplementationType));
-                case ServiceLifetime.Scoped:
-                    if (_isRootProvider)
-                    {
-                        throw new InvalidOperationException($"Cannot resolve scoped service '{serviceType.Name}' from root service provider. Use IServiceScopeFactory.");
-                    }
-                    return _scopedInstances.GetOrAdd(descriptor.ServiceType, _ => CreateInstance(descriptor.ImplementationType));
-                default:
-                    throw new NotSupportedException($"Service lifetime '{descriptor.Lifetime}' not supported.");
-            }
+                ServiceLifetime.Transient => CreateInstance(descriptor.ImplementationType),
+                ServiceLifetime.Singleton => SingletonInstance(serviceType, descriptor),
+                ServiceLifetime.Scoped => ScopeInstance(serviceType, descriptor),
+                _ => throw new NotSupportedException($"Service lifetime '{descriptor.Lifetime}' not supported.")
+            };
+        }
+        
+        private object TryCreateInstance(Type serviceType, ServiceDescriptor descriptor)
+            => _scopedInstances.GetOrAdd(serviceType, _ => CreateInstance(descriptor.ImplementationType));
+
+        private object ScopeInstance(Type serviceType, ServiceDescriptor descriptor)
+        {
+            if (_isRootProvider)
+                throw new InvalidOperationException($"Cannot resolve scoped service '{serviceType.Name}' from root service provider. Use IServiceScopeFactory.");
+            return TryCreateInstance(serviceType, descriptor);
         }
 
-        public TService GetRequiredService<TService>()
-            => (TService)GetRequiredService(typeof(TService));
+        private object SingletonInstance(Type serviceType, ServiceDescriptor descriptor)
+            => TryCreateInstance(serviceType, descriptor);
+
+        public TService GetRequiredService<TService>() => (TService)GetRequiredService(typeof(TService));
 
         public object GetRequiredService(Type serviceType)
         {
@@ -122,17 +124,13 @@ namespace Shaper.Core.DependencyInjection.Implement;
                 .FirstOrDefault();
 
             if (constructor == null)
-            {
                 throw new InvalidOperationException($"No public constructor found for type '{implementationType.Name}'.");
-            }
 
             var parameters = constructor.GetParameters();
             var parameterInstances = new object[parameters.Length];
 
             for (var i = 0; i < parameters.Length; i++)
-            {
                 parameterInstances[i] = GetRequiredService(parameters[i].ParameterType);
-            }
 
             return constructor.Invoke(parameterInstances);
         }
