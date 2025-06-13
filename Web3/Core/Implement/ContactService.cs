@@ -1,6 +1,6 @@
-﻿using Web3.Service;
+﻿using Web3.Core.Service;
 
-namespace Web3.Implement
+namespace Web3.Core.Implement
 {
     public class ContactService : IContactService
     {

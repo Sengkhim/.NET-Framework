@@ -3,10 +3,11 @@ using Shaper.Core.Connection.Implement;
 using Shaper.Core.Connection.Service;
 using Shaper.Core.DependencyInjection.Implement;
 using Shaper.Core.DependencyInjection.Service;
-using Web3.Implement;
-using Web3.Service;
+using Web3.Core.Implement;
+using Web3.Core.Service;
+using Web3.Infrastructure.Repository;
 
-namespace Web3.Extension;
+namespace Web3.Core.Extension;
 
 public static class ServiceCollectionExtension
 {
@@ -17,5 +18,6 @@ public static class ServiceCollectionExtension
 
         services.AddScoped<IDbConnectionProvider, DbConnectionProvider>();
         services.AddScoped<IContactService, ContactService>();
+        services.AddScoped<IProductionRepository, ProductionRepository>();
     } 
 }

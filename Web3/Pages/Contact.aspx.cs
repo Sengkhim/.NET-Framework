@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using Shaper.Core.Attribute;
 using Shaper.Core.Connection.Service;
 using Shaper.Core.DependencyInjection.Service;
 using Shaper.Utility;
-using Web3.Service;
+using Web3.Core.Service;
+using Web3.Infrastructure.Model;
+using Web3.Infrastructure.Repository;
 using IServiceProvider = Shaper.Core.DependencyInjection.Service.IServiceProvider;
 
 namespace Web3.Pages
@@ -29,6 +33,8 @@ namespace Web3.Pages
         [TryInject] protected IConfiguration Configuration { get;  set; }
         [TryInject] protected IContactService ContactService { get; set; }
         [TryInject] protected IDbConnectionProvider ConnectionProvider { get;  set; }
+
+        [TryInject] protected IProductionRepository Repository { get; set; }
         
         #endregion
         
@@ -37,17 +43,30 @@ namespace Web3.Pages
         protected string ConnectionString { get; private set; } = string.Empty;
         protected string LogLevel { get; private set; } = string.Empty;
         protected string SiteName { get; private set; } = string.Empty;
+        protected List<Product> ProductsList { get; private set; }
         
         #endregion
         
         protected override void Page_Load(object sender, EventArgs e)
         {
-            base.Page_Load(sender, e);
+            try
+            {
+                base.Page_Load(sender, e);
             
-            DisplayEmail = ContactService.GetEmail();
-            ConnectionString = ConnectionProvider.GetConnection("Connection").ConnectionString;
-            LogLevel = Configuration.GetValue("AppSettings:LogLevel");
-            SiteName = Configuration.GetValue("AppSettings:SiteName");
+                DisplayEmail = ContactService.GetEmail();
+                ConnectionString = ConnectionProvider.GetConnection("Connection").ConnectionString;
+                LogLevel = Configuration.GetValue("AppSettings:LogLevel");
+                SiteName = Configuration.GetValue("AppSettings:SiteName");
+
+                ProductsList = Repository.GetAll().ToList();
+                
+                // productsRepeater.DataSource = ProductsList;
+                // productsRepeater.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

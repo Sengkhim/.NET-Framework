@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Web3.Extension;
+using Web3.Core.Extension;
 using Shaper.Core.DependencyInjection.Implement;
 using Shaper.Core.DependencyInjection.Service;
 using IServiceProvider = Shaper.Core.DependencyInjection.Service.IServiceProvider;
