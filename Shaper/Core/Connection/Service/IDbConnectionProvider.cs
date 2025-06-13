@@ -1,8 +1,9 @@
 ﻿using System.Data;
+using System.Threading.Tasks;
 
 namespace Shaper.Core.Connection.Service;
 
 public interface IDbConnectionProvider
 {
-    IDbConnection GetConnection(string name);
+    Task<IDbConnection> GetConnection(string name);
 }

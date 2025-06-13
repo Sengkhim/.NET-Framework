@@ -19,5 +19,5 @@ public static class ServiceCollectionExtension
         services.AddScoped<IDbConnectionProvider, DbConnectionProvider>();
         services.AddScoped<IContactService, ContactService>();
         services.AddScoped<IProductionRepository, ProductionRepository>();
-    } 
+    }
 }

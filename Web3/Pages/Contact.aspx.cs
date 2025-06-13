@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using Shaper.Core.Attribute;
 using Shaper.Core.Connection.Service;
-using Shaper.Core.DependencyInjection.Service;
+using Shaper.Extension;
 using Shaper.Utility;
-using Web3.Core.Service;
-using Web3.Infrastructure.Model;
 using Web3.Infrastructure.Repository;
 using IServiceProvider = Shaper.Core.DependencyInjection.Service.IServiceProvider;
 
@@ -30,21 +28,43 @@ namespace Web3.Pages
     public partial class Contact : BasePage
     {
         #region Service Dependency
-        [TryInject] protected IConfiguration Configuration { get;  set; }
-        [TryInject] protected IContactService ContactService { get; set; }
-        [TryInject] protected IDbConnectionProvider ConnectionProvider { get;  set; }
+
+        [TryInject] protected IDbConnectionProvider Provider { get; set; }
 
         [TryInject] protected IProductionRepository Repository { get; set; }
         
         #endregion
         
         #region Properties
-        protected string DisplayEmail { get; private set; } = string.Empty;
         protected string ConnectionString { get; private set; } = string.Empty;
-        protected string LogLevel { get; private set; } = string.Empty;
-        protected string SiteName { get; private set; } = string.Empty;
-        protected List<Product> ProductsList { get; private set; }
+
+        #endregion
+
+        #region Method
+
+        private async Task TryLoadAsync()
+        {
+            var timeoutPolicy = ResiliencyPolicy.Timeout(TimeSpan.FromSeconds(2));
+
+            await timeoutPolicy.ExecuteAsync(async () =>
+            {
+                var products = await Repository.GetAllAsync();
+            
+                ProductRepeater.DataSource = products.ToList();;
+                ProductRepeater.DataBind();
+                
+            });
+        }
+
+        private async Task GetConnectionAsync()
+        {
+            var dapper = await Provider.GetConnection("Connection");
+            ConnectionString = dapper.ConnectionString;
+        }
         
+        private async Task LoadAsync() => 
+            await Task.WhenAll(GetConnectionAsync(), TryLoadAsync());
+
         #endregion
         
         protected override void Page_Load(object sender, EventArgs e)
@@ -52,16 +72,7 @@ namespace Web3.Pages
             try
             {
                 base.Page_Load(sender, e);
-            
-                DisplayEmail = ContactService.GetEmail();
-                ConnectionString = ConnectionProvider.GetConnection("Connection").ConnectionString;
-                LogLevel = Configuration.GetValue("AppSettings:LogLevel");
-                SiteName = Configuration.GetValue("AppSettings:SiteName");
-
-                ProductsList = Repository.GetAll().ToList();
-                
-                // productsRepeater.DataSource = ProductsList;
-                // productsRepeater.DataBind();
+                RegisterAsyncTask(new PageAsyncTask(LoadAsync));
             }
             catch (Exception ex)
             {

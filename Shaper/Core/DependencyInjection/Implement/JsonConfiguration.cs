@@ -117,7 +117,7 @@ namespace Shaper.Core.DependencyInjection.Implement
                         break;
                     case JTokenType.Array:
                     {
-                        // Handle simple arrays of primitive types by joining, or serialize for complex ones
+                        // HandleRetry simple arrays of primitive types by joining, or serialize for complex ones
                         var jsonArray = (JArray)property.Value;
                         _settingsCache[key] = jsonArray.ToString(Formatting.None); 
                         break;

@@ -5,15 +5,25 @@
     AutoEventWireup="true"
     CodeBehind="Contact.aspx.cs"
     Inherits="Web3.Pages.Contact"
+    Async="true"
 %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main aria-labelledby="title">
         
-        <h2 id="title">Email: <%: DisplayEmail %>.</h2>
-        <h6>Connection String: <%: ConnectionString %></h6>        
-        <h6>Level Log: <%: LogLevel %></h6>
-        <h6>SiteName: <%: SiteName %></h6>
+        <h5><%: ConnectionString %></h5>
+        
+        <asp:Repeater ID="ProductRepeater" runat="server">
+
+            <ItemTemplate>
+                <tr>
+                    <td><%# Eval("Name") %></td>
+                    <td><%# Eval("Description") %></td>
+                    <td><%# Eval("Price", "{0:C}") %></td>
+                </tr>
+            </ItemTemplate>
+
+        </asp:Repeater>
         
     </main>
 </asp:Content>
