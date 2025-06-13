@@ -3,9 +3,9 @@ using System.Web;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Web3.Core.Extension;
-using Shaper.Core.DependencyInjection.Implement;
-using Shaper.Core.DependencyInjection.Service;
-using IServiceProvider = Shaper.Core.DependencyInjection.Service.IServiceProvider;
+using ShaperUtilities.Core.DependencyInjection.Implement;
+using ShaperUtilities.Core.DependencyInjection.Service;
+using IServiceProvider = ShaperUtilities.Core.DependencyInjection.Service.IServiceProvider;
 
 namespace Web3
 {

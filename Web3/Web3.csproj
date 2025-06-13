@@ -247,9 +247,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Shaper\Shaper.csproj">
+    <ProjectReference Include="..\ShaperUtilities\ShaperUtilities.csproj">
       <Project>{7fea8e55-8788-4621-87b7-ed0ef0a95043}</Project>
-      <Name>Shaper</Name>
+      <Name>ShaperUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

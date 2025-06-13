@@ -3,12 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
-using Shaper.Core.Attribute;
-using Shaper.Core.Connection.Service;
-using Shaper.Extension;
-using Shaper.Utility;
+using ShaperUtilities.Core.Attribute;
+using ShaperUtilities.Core.Connection.Service;
+using ShaperUtilities.Extension;
+using ShaperUtilities.Utility;
 using Web3.Infrastructure.Repository;
-using IServiceProvider = Shaper.Core.DependencyInjection.Service.IServiceProvider;
+using IServiceProvider = ShaperUtilities.Core.DependencyInjection.Service.IServiceProvider;
 
 namespace Web3.Pages
 {

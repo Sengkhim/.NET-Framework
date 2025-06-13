@@ -1,8 +1,8 @@
 ﻿using System.Web;
-using Shaper.Core.Connection.Implement;
-using Shaper.Core.Connection.Service;
-using Shaper.Core.DependencyInjection.Implement;
-using Shaper.Core.DependencyInjection.Service;
+using ShaperUtilities.Core.Connection.Implement;
+using ShaperUtilities.Core.Connection.Service;
+using ShaperUtilities.Core.DependencyInjection.Implement;
+using ShaperUtilities.Core.DependencyInjection.Service;
 using Web3.Core.Implement;
 using Web3.Core.Service;
 using Web3.Infrastructure.Repository;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
-using Shaper.Core.Connection.Service;
+using ShaperUtilities.Core.Connection.Service;
 using Web3.Infrastructure.Model;
 
 namespace Web3.Infrastructure.Repository;

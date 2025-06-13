@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web3", "Web3\Web3.csproj", "{0E263921-74C9-4636-8CF6-8CD774D8AEDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shaper", "Shaper\Shaper.csproj", "{7FEA8E55-8788-4621-87B7-ED0EF0A95043}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaperUtilities", "ShaperUtilities\ShaperUtilities.csproj", "{7FEA8E55-8788-4621-87B7-ED0EF0A95043}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
