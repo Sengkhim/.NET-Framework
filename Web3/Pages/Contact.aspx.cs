@@ -50,7 +50,7 @@ namespace Web3.Pages
             {
                 var products = await Repository.GetAllAsync();
             
-                ProductRepeater.DataSource = products.ToList();;
+                ProductRepeater.DataSource = products.ToList();
                 ProductRepeater.DataBind();
                 
             });

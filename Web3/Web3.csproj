@@ -139,6 +139,7 @@
     <Content Include="Global.asax" />
     <Content Include="Pages\Contact.aspx" />
     <Content Include="Pages\Default.aspx" />
+    <Content Include="Pages\Panel.aspx" />
     <Content Include="Pages\Site.Master" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -222,6 +223,13 @@
     </Compile>
     <Compile Include="Pages\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Panel.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Panel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Panel.aspx.designer.cs">
+      <DependentUpon>Panel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
