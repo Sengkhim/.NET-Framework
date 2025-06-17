@@ -66,6 +66,7 @@
         <Compile Include="Core\DependencyInjection\Service\IServiceProvider.cs" />
         <Compile Include="Core\DependencyInjection\Service\IServiceScope.cs" />
         <Compile Include="Core\DependencyInjection\Service\IServiceScopeFactory.cs" />
+        <Compile Include="Core\Logging\Implement\InterceptorLogging.cs" />
         <Compile Include="Core\Logging\Implement\Logger.cs" />
         <Compile Include="Core\Logging\Service\ILogger.cs" />
         <Compile Include="Extension\ResiliencyPolicyExtension.cs" />

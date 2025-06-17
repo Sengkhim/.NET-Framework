@@ -12,23 +12,31 @@ public class Logger : ILogger
    
     public void Information(string fmt, params object[] vars) 
       => Trace.TraceInformation(fmt, vars);
+
    
     public void Warning(string message) => Trace.TraceWarning(message);
+
     
     public void Warning(string fmt, params object[] vars) => Trace.TraceWarning(fmt, vars);
+
     
     public void Information(Exception exception, string fmt, params object[] vars)
       => Trace.TraceInformation(FormatExceptionMessage(exception, fmt, vars));
+
     
     public void Warning(Exception exception, string fmt, params object[] vars)
       => Trace.TraceWarning(FormatExceptionMessage(exception, fmt, vars));
+ 
     
     public void Error(string message) => Trace.TraceError(message);
+ 
     
     public void Error(string fmt, params object[] vars) => Trace.TraceError(fmt, vars);
+ 
     
     public void Error(Exception exception, string fmt, params object[] vars)
       => Trace.TraceError(FormatExceptionMessage(exception, fmt, vars));
+ 
     
     public void TraceApi(
       string componentName,
@@ -36,7 +44,7 @@ public class Logger : ILogger
       TimeSpan timespan)
       => TraceApi(componentName, method, timespan, "");
  
-  
+    
     public void TraceApi(
       string componentName,
       string method,

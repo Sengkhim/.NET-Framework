@@ -1,5 +1,6 @@
 ﻿namespace ShaperUtilities.Core.DependencyInjection.Enum;
 
+// 1. Service Lifetime Enum
 /// <summary>
 /// Defines the lifetime of a service in the DI container.
 /// </summary>
